@@ -1,0 +1,38 @@
+urls:
+    region:
+        vn: https://www.immigration.govt.nz/new-zealand-visas/apply-for-a-visa/about-visa/vietnam-working-holiday-visa
+        usa: https://www.immigration.govt.nz/new-zealand-visas/apply-for-a-visa/about-visa/united-states-of-america-working-holiday-visa
+    chosen: usa
+        
+submit_time:
+    hour: 15
+    minute: 8
+
+authentication:
+    username: jessedo
+    password: 123Dkvinh
+    payer_name: Nguyen Van Anh Tuan
+    
+payment:
+    card_number: 1111111111111111111
+    expirydate: 1111
+    csc: 1111
+    cardholder_name: Nguyen Van Anh Tuan
+
+waiting_time: 240
+
+css:
+    apply_now_btn: button#submit_eoi_btn
+    login_btn: a.btn.btn__login.sitelogin
+    username_txt: input[type=text]
+    password_txt: input[type=password]
+    submit_btn: input[type=submit]
+    submit_process_btn: a#ContentPlaceHolder1_applicationList_applicationsDataGrid_submitHyperlink_0
+    next_step_btn: 'a#ContentPlaceHolder1_onlinePaymentAnchor2 > span'
+    payer_name_txt: input#_ctl0_ContentPlaceHolder1_payerNameTextBox
+    ok_btn: input#_ctl0_ContentPlaceHolder1_okButton
+    card_number_txt: input#cardnumber
+    expirydate_txt: input#expirydate
+    csc_txt: input#cardverificationcode
+    card_holder_txt: input#cardholder
+    payment_btn: button.payment-button
