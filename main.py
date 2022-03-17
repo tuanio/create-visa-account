@@ -40,8 +40,10 @@ driver.implicitly_wait(configs['waiting_time'])
 # In[32]:
 
 
-chosen = configs['urls']['chosen']
-driver.get(configs['urls']['region'][chosen])
+# chosen = configs['urls']['chosen']
+# driver.get(configs['urls']['region'][chosen])
+
+driver.get(configs['login_url'])
 
 
 # In[6]:
@@ -114,7 +116,7 @@ configs['submit_time']
 
 def check():
     now = datetime.now()
-    return (now.hour == configs['submit_time']['hour']) and (now.minute == configs['submit_time']['minute'])
+    return (now.hour >= configs['submit_time']['hour']) and (now.minute >= configs['submit_time']['minute'])
 
 print("Đợi một chút")
 

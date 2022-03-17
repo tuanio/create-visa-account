@@ -1,4 +1,5 @@
 urls:
+    login_url: https://onlineservices.immigration.govt.nz/
     region:
         vn: https://www.immigration.govt.nz/new-zealand-visas/apply-for-a-visa/about-visa/vietnam-working-holiday-visa
         usa: https://www.immigration.govt.nz/new-zealand-visas/apply-for-a-visa/about-visa/united-states-of-america-working-holiday-visa
