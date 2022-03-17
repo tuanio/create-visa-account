@@ -43,7 +43,7 @@ driver.implicitly_wait(configs['waiting_time'])
 # chosen = configs['urls']['chosen']
 # driver.get(configs['urls']['region'][chosen])
 
-driver.get(configs['login_url'])
+driver.get(configs['urls']['login_url'])
 time.sleep(1)
 
 
