@@ -44,6 +44,7 @@ driver.implicitly_wait(configs['waiting_time'])
 # driver.get(configs['urls']['region'][chosen])
 
 driver.get(configs['login_url'])
+time.sleep(1)
 
 
 # In[6]:
@@ -75,7 +76,7 @@ scroll_bottom()
 
 
 # button apply now
-waiting(configs['css']['apply_now_btn']).click()
+# waiting(configs['css']['apply_now_btn']).click()
 
 
 # In[9]:
@@ -83,14 +84,14 @@ waiting(configs['css']['apply_now_btn']).click()
 
 scroll_bottom()
 # button login or create account
-find_elements(configs['css']['login_btn'])[-1].click()
+# find_elements(configs['css']['login_btn'])[-1].click()
 
 
 # In[10]:
 
 
 # switch tab
-driver.switch_to.window(driver.window_handles[-1])
+# driver.switch_to.window(driver.window_handles[-1])
 
 
 # In[11]:
