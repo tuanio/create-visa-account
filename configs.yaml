@@ -1,5 +1,5 @@
 urls:
-    login_url: https://onlineservices.immigration.govt.nz/
+    login_url: https://onlineservices.immigration.govt.nz/?WHS
     region:
         vn: https://www.immigration.govt.nz/new-zealand-visas/apply-for-a-visa/about-visa/vietnam-working-holiday-visa
         usa: https://www.immigration.govt.nz/new-zealand-visas/apply-for-a-visa/about-visa/united-states-of-america-working-holiday-visa
@@ -16,7 +16,7 @@ authentication:
     
 payment:
     card_number: 1111111111111111111
-    expirydate: 1111
+    expirydate: "1111"
     csc: 1111
     cardholder_name: Nguyen Van Anh Tuan
 

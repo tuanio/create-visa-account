@@ -40,9 +40,6 @@ driver.implicitly_wait(configs['waiting_time'])
 # In[32]:
 
 
-# chosen = configs['urls']['chosen']
-# driver.get(configs['urls']['region'][chosen])
-
 driver.get(configs['urls']['login_url'])
 time.sleep(1)
 
@@ -75,24 +72,6 @@ scroll_bottom()
 # In[8]:
 
 
-# button apply now
-# waiting(configs['css']['apply_now_btn']).click()
-
-
-# In[9]:
-
-
-scroll_bottom()
-# button login or create account
-# find_elements(configs['css']['login_btn'])[-1].click()
-
-
-# In[10]:
-
-
-# switch tab
-# driver.switch_to.window(driver.window_handles[-1])
-
 
 # In[11]:
 
@@ -104,12 +83,34 @@ waiting(configs['css']['password_txt']).send_keys(configs['authentication']['pas
 waiting(configs['css']['submit_btn']).click() # button click submit
 
 
+chosen = configs['urls']['chosen']
+driver.get(configs['urls']['region'][chosen])
+print("Ho here")
 # # Đợi ở đây
 
 # In[33]:
+scroll_bottom()
+time.sleep(1)
+
+# button apply now
+waiting(configs['css']['apply_now_btn']).click()
 
 
-configs['submit_time']
+# In[9]:
+
+
+scroll_bottom()
+# button login or create account
+find_elements(configs['css']['login_btn'])[-1].click()
+
+
+# In[10]:
+
+
+# switch tab
+driver.switch_to.window(driver.window_handles[-1])
+
+
 
 
 # In[34]:
@@ -178,7 +179,7 @@ waiting(configs['css']['ok_btn']).click() # button ok
 
 scroll_bottom()
 # payment information
-waiting(configs['css']['card_number_txt']).send_keys(configs['payment']['card_number'])
+waiting(configs['css']['card_number_txt']).send_keys(str(configs['payment']['card_number'])
 waiting(configs['css']['expirydate_txt']).send_keys(configs['payment']['expirydate'])
 waiting(configs['css']['csc_txt']).send_keys(configs['payment']['csc'])
 waiting(configs['css']['card_holder_txt']).send_keys(configs['payment']['cardholder_name'])
