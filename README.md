@@ -9,10 +9,10 @@ Hello, this is a guide on how to use this project. The algorithm testing framewo
 
 ### Introduction to the similar word pair dataset
 
-The main component of this project is the similar word pair dataset, where two words in a pair must satisfy the condition cosine_similarity(word_vector[word_A], word_vector[word_B]) >= threshold. You will have to adjust the threshold yourself to achieve the best possible result for the similar word pair dataset (try modifying and running it to create), where the threshold usually ranges between `0.9 - 0.7`.
+The main component of this project is the similar word pair dataset, where two words in a pair must satisfy the condition `cosine_similarity(word_vector[word_A], word_vector[word_B]) >= threshold`. You will have to adjust the threshold yourself to achieve the best possible result for the similar word pair dataset (try modifying and running it to create), where the threshold usually ranges between `0.9 - 0.7`.
 
-- Examples of good word pairs: father|dad, mom|mother, ...
-- Examples of bad word pairs: one|two, parents|daughter, ...
+- Examples of good word pairs: `father|dad, `mom|mother`, ...
+- Examples of bad word pairs: `one|two`, `parents|daughter`, ...
 
 You will find that good word pairs will provide highly related pairs of words, which may have some errors, but as long as the similarity is high, it is acceptable (not too strict).
 
@@ -46,16 +46,16 @@ year|month
 For each specific case:
 
 1. GloVe & SpaCy:
-    - Download the pretrained GloVe model here (it is recommended to use the Wikipedia 2014 + Gigaword 5 dataset as it is more suitable for machine translation tasks):  [https://nlp.stanford.edu/projects/glove/](https://nlp.stanford.edu/projects/glove/).
+    - Download the pretrained GloVe model here (it is recommended to use the `Wikipedia 2014 + Gigaword 5` dataset as it is more suitable for machine translation tasks):  [https://nlp.stanford.edu/projects/glove/](https://nlp.stanford.edu/projects/glove/).
     - Download the pretrained SpaCy model here (use en_core_web_md or above): [https://spacy.io/models](https://spacy.io/models)
     - Run the `CorpusBuilding\word_vec\glove_spacy\glove_building.py` file with the settings in the file to create a similar word pair dataset named `word-pairs.glove.en`, and store this file somewhere for use in the testing step.
 2. Fasttext & SpaCy:
-    - Download the Fasttext model here (use pretrained versions for word instead of subword, as we test on word): [https://fasttext.cc/docs/en/english-vectors.html](https://fasttext.cc/docs/en/english-vectors.html).
+    - Download the `Fasttext` model here (use pretrained versions for word instead of subword, as we test on word): [https://fasttext.cc/docs/en/english-vectors.html](https://fasttext.cc/docs/en/english-vectors.html).
     - Download the pretrained SpaCy model here (use en_core_web_md or above): [https://spacy.io/models](https://spacy.io/models)
-    - Run the CorpusBuilding\word_vec\fasttext_spacy\fasttext_building.py file with the settings in the file to create a similar word pair dataset named word-pairs.fasttext.en, and store this file somewhere for use in the testing step.
+    - Run the `CorpusBuilding\word_vec\fasttext_spacy\fasttext_building.py` file with the settings in the file to create a similar word pair dataset named `word-pairs.fasttext.en`, and store this file somewhere for use in the testing step.
 3. Neural Language Model:
-    - Xem xét các mô hình dành cho text ở đây (lựa chọn thêm phần `TEXT MODELS`): [https://huggingface.co/docs/transformers/index](https://huggingface.co/docs/transformers/index). Sau đó tìm tên pretrained của các mô hình đó ở đây: [https://huggingface.co/models](https://huggingface.co/models).
-        - Ví dụ: Tôi muốn sử dụng RoBERTa làm mô hình để lấy word vectors, tôi sẽ lên đây để xem nó có tồn tại không [https://huggingface.co/docs/transformers/model_doc/roberta](https://huggingface.co/docs/transformers/model_doc/roberta). Sau đó tôi search [https://huggingface.co/models?sort=downloads&search=roberta](https://huggingface.co/models?sort=downloads&search=roberta) để lấy được tên của các pretrained model thuộc roberta, xong tôi copy cái tên đó và đưa vào flag `--hf-pretrained-model` trong file `CorpusBuilding\word_vec\neural_lm\neural_lm_building.py` để sử dụng. Trong trường hợp mô hình RoBERTa thì tôi sẽ sử dụng `roberta-base`.
+    - Consider text models here (also choose from the `TEXT MODELS` section): [https://huggingface.co/docs/transformers/index](https://huggingface.co/docs/transformers/index). Then find the names of the pretrained models here: [https://huggingface.co/models](https://huggingface.co/models).
+        - For example, if I want to use `RoBERTa` as the model to get word vectors, I will check if it exists here: [https://huggingface.co/docs/transformers/model_doc/roberta](https://huggingface.co/docs/transformers/model_doc/roberta). Then I search for the names of the pretrained models that belong to `RoBERTa` here: [https://huggingface.co/models?sort=downloads&search=roberta](https://huggingface.co/models?sort=downloads&search=roberta). After that, I copy the name and put it into the `--hf-pretrained-model` flag in the `CorpusBuilding\word_vec\neural_lm\neural_lm_building.py` file to use it. In the case of the `RoBERTa` model, I will use `roberta-base`.
 
 ## Machine Translation Model Evaluation
 
@@ -217,33 +217,50 @@ pip install -r requirements.txt
 ## Files Structure
 
 ```
-MutantMT
-│   .gitignore
-│   main.py -> A collection of module functions that can be run
-│   README.md
-│   requirements.txt
-│   utils.py
-│
-├───ConsistencyScoring
-├───CorpusBuilding
-│   │   fasttext_main.py -> For creating a corpus using fasttext
-│   │   glove_main.py -> For creating a corpus using glove
-│   │   scripts.py -> Scripts to help in Corpus Building
-|   |   get_word_list.py -> scripts to get a word list file to build 
-│   │   valid_words.fasttext.en.json -> A list of words to consider for word pairs of fasttext
-│   │   valid_words.glove.en.json -> A list of words to consider for word pairs of glove
-│   │   word-pairs.glove.en -> Corpus of glove (6596 pairs of words).
-│   │   word-pairs.glove.no_filter.zip -> Corpus of glove (2,481,180 pairs of words) (unzip required)
-│   │   __init__.py
-│   │
-│   └───word_vec
-│       ├───fasttext
-│       │       README.md -> Instructions on how to download fasttext model
-│       │
-│       └───glove
-│               README.md -> Instructions on how to download glove model
-│
-└───StructureFilter
-        scripts.py -> Scripts to help in Structure Filtering
+MUTANTMT:.
+|   .gitignore -> A configuration file for Git, a version control system, specifying files and directories that should be ignored when committing changes to the repository.
+|   consistency_score.xlsx
+|   corpus-translated.vi -> Example of a file 
+|   corpus.en
+|   main.py  -> A collection of module functions that can be run
+|   MT_result.csv
+|   mutant_version.json
+|   README.md -> documentation
+|   requirements.txt -> This is those packages you should install
+|   utils.py -> some scripts that use by another files
+|
++---ConsistencyScoring
+|       algorithm.py -> implement ConsistencyScoring algorithm
+|       similarity.py -> implement 4 type of similarity score: longest common sub-sequence (lcs-based), edit distance (ed-based), tf-idf-based, bleu-based
+|       wdiff.py -> implement wdiff like algorithm to get list of remove-one difference word sentences
+|       __init__.py
+|
++---CorpusBuilding
+|   |   get_word_list.py -> this is the file that you can get a list of word from fasttext (~ 1M words)
+|   |   scripts.py -> contain word_vocab and word_replacement functions
+|   |   valid_words.fasttext.en.json -> examples of valid words for considering in fasttext & spacy file
+|   |   word-pairs.fasttext.en -> examples of word pairs computed using fasttext
+|   |   word-pairs.glove.en -> examples of word pairs computed using glove (filtered)
+|   |   word-pairs.glove.no_filter.zip -> zip file that contain examples of word pairs comupted using glove (no filter words)
+|   |   __init__.py
+|   |
+|   \---word_vec
+|       +---fasttext_spacy
+|       |       fasttext_building.py -> building word pairs corpus using fasttext 
+|       |       README.md
+|       |
+|       +---glove_spacy
+|       |       glove_building.py -> building word pairs corpus using glove
+|       |       README.md
+|       |
+|       \---neural_lm
+|               neural_lm_building.py -> building word pairs using neural language model (LLMs)
+|               README.md
+|
++---dependencies
+|   \---stanford-parser -> A directory containing the Stanford Parser, a natural language processing tool, you should download and extracted to this folder.
+|
+\---StructureFilter
+        scripts.py -> scripts for check structure compatible
         __init__.py
 ```
