@@ -37,11 +37,34 @@ Now that you have created the environment and installed the required packages, y
 
 ### Use `curl`:
 
-- `curl -X POST -F "file=@D:\\English Indian Accent\\data\\english\\wav\\train_hindifullfemale_00001.wav" -F "transcript=Author of the danger trail, Philip Steels, etc." http://localhost:80/uploadfile/`
+`curl -X POST -F "file=@D:\\English Indian Accent\\data\\english\\wav\\train_hindifullfemale_00001.wav" -F "transcript=Author of the danger trail, Philip Steels, etc." http://localhost:80/uploadfile/`
 
 ### Use `postman`:
 
 ![Screenshot 2023-03-23 012035](https://user-images.githubusercontent.com/30165828/227000803-706c5de6-5062-4aa5-b365-d985b35fe7c5.png)
+
+### Result:
+
+````JSON
+{
+    "transcription": "Author of the danger trail, Phillips steels, etc.",
+    "probability": [
+        { "word": "Author", "prob": 78.55 },
+        { "word": "of", "prob": 99.2 },
+        { "word": "the", "prob": 93.02 },
+        { "word": "danger", "prob": 76.11 },
+        { "word": "trail", "prob": 69.99 },
+        { "word": ",", "prob": 61.86 },
+        { "word": "Phillips", "prob": 25.1 },
+        { "word": "steels", "prob": 72.09 },
+        { "word": ",", "prob": 57.01 },
+        { "word": "etc", "prob": 94.66 },
+        { "word": ".", "prob": 68.56 }
+    ],
+    "time_taken": 2.1506,
+    "score": 75.0
+}
+````
 
 # API Endpoints
 
