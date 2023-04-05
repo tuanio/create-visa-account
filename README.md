@@ -1,76 +1,159 @@
-# Speech-to-text API
+# Fine-tuning on Whisper 
 
-# Installation Guide for Speech-to-Text API
+## Explanation of ASR Training Parameters
 
-To install and run the Speech-to-Text API, you will need to create an environment. There are two ways to do this, using either Anaconda or venv. Follow the steps below to create your environment:
+- `--batch-size`: This parameter specifies the number of samples in each batch of data. The default value is 16, and the data is processed per GPU batch size.
 
-## Environment
+- `--epochs`: This parameter specifies the number of times the model will train on the entire dataset. The default value is 5.
 
-### Using Anaconda:
-1. To create a new environment, open your command prompt and type `conda create -n <env_name>` and press Enter.
+- `--sample-rate`: This parameter specifies the sample rate of the audio files in Hz. The default value is 16000 Hz.
 
-2. To activate the environment, type `conda activate <env_name>` and press Enter.
+- `--num-workers`: This parameter specifies the number of worker threads used for data loading. The default value is 6.
 
-### Using venv:
+- `--log-wandb`: This parameter is a flag that enables logging to Weights and Biases (W&B). If set to True, training logs will be sent to a W&B project.
 
-1. To create a new environment, open your command prompt and type `python -m venv venv` and press Enter.
+- `--train`: This parameter is a flag that indicates whether to train the model. If set to True, the model will be trained.
 
-2. To activate the environment, type `venv\Scripts\activate` on Windows or `source venv\bin\activate` on Linux and press Enter.
+- `--test`: This parameter is a flag that indicates whether to test the model. If set to True, the model will be tested.
 
-## Installing Required Packages
+- `--predict`: This parameter is a flag that indicates whether to predict using the model. If set to True, the model will be used for prediction.
 
-After creating your environment, you will need to install the required packages. To do this, follow these steps:
+- `--indict-tts-path`: This parameter specifies the path to the IndictTTS dataset.
 
-1. Make sure your environment is activated.
+- `--cv-path`: This parameter specifies the path to the Common Voice dataset.
 
-2. Type `pip install -r requirements.txt` and press Enter.
+- `--grad-clip`: This parameter specifies the maximum gradient norm for clipping. The default value is 1.0.
 
-# Running the API
+- `--warmup-portion`: This parameter specifies the proportion of training steps to use for linearly increasing the learning rate during warm-up. The default value is 0.01.
 
-Now that you have created the environment and installed the required packages, you can run the Speech-to-Text API. To do this, follow these steps:
+- `--fine-tune-lr-limit`: This parameter specifies the upper limit of the learning rate for fine-tuning. The default value is 20.
 
-1. Type `uvicorn main:app --host 0.0.0.0 --port 80 --reload` and press Enter.
+- `--scheduler-for-step`: This parameter is a flag that indicates whether to use the step-based scheduler. If set to True, the step-based scheduler will be used else is epoch-based.
 
-2. The API can now be accessed via the host: `http://localhost:80/`.
+- `--start-eval-epoch`: This parameter specifies the epoch at which to start evaluation. The default value is 0.
 
-## Example on using API
+- `--seed`: This parameter specifies the random seed used for reproducibility. The default value is 1211.
 
-### Use `curl`:
+- `--pretrained-model-path`: This parameter specifies the path of pretrained model folder used for training or evaluating. The default value is "tiny".
 
-`curl -X POST -F "file=@D:\\English Indian Accent\\data\\english\\wav\\train_hindifullfemale_00001.wav" -F "transcript=Author of the danger trail, Philip Steels, etc." http://localhost:80/uploadfile/`
+- `--ckpt-path`: This parameter specifies the path to the checkpoint file. The file will have `.ckpt` extension.
 
-### Use `postman`:
+## Setup the environment
 
-![Screenshot 2023-03-23 012035](https://user-images.githubusercontent.com/30165828/227000803-706c5de6-5062-4aa5-b365-d985b35fe7c5.png)
+### Creating and Activating an Environment using Conda
 
-### Result:
+#### Windows, Linux
 
-````JSON
-{
-    "transcription": "Author of the danger trail, Phillips steels, etc.",
-    "probability": [
-        { "word": "Author", "prob": 78.55 },
-        { "word": "of", "prob": 99.2 },
-        { "word": "the", "prob": 93.02 },
-        { "word": "danger", "prob": 76.11 },
-        { "word": "trail", "prob": 69.99 },
-        { "word": ",", "prob": 61.86 },
-        { "word": "Phillips", "prob": 25.1 },
-        { "word": "steels", "prob": 72.09 },
-        { "word": ",", "prob": 57.01 },
-        { "word": "etc", "prob": 94.66 },
-        { "word": ".", "prob": 68.56 }
-    ],
-    "time_taken": 2.1506,
-    "score": 75.0
-}
-````
+1. Open the `Anaconda Prompt` (or `CMD`, `Bash`, `Terminal`).
 
-# API Endpoints
+2. To create a new environment, enter the following command:
+```
+conda create --name env_name
+```
+Replace `env_name` with your desired environment name.
 
-The Speech-to-Text API has two endpoints, as described below:
+3. To activate the environment, enter the following command:
+```
+conda activate env_name
+```
 
-| Method | Endpoint | Parameters | Description |
-| --- | --- | --- | --- |
-| `GET` | `/` | None | This is a placeholder for the index endpoint. | 
-| `POST` | `/uploadfile/` | `file` (File) and `transcript` (Optional), both data need to be sent in a form request.	This API sends an audio clip with (or without) a text reference transcription. If the text is not sent, the API returns the transcription of the audio (prediction) with the probability for each word. If the text is sent, the API returns a `score` parameter, where `score = 1 - WER`. |
+Replace `env_name` with the name of the environment you created.
+
+### Creating and Activating an Environment using venv
+
+### Window
+
+1. Open a command prompt.
+2. Navigate to the directory where you want to create the environment.
+3. To create a new environment, enter the following command:
+```
+python -m venv env_name
+```
+Replace `env_name` with your desired environment name.
+4. To activate the environment, enter the following command:
+```
+env_name\Scripts\activate.bat
+```
+Replace `env_name` with the name of the environment you created.
+
+### Linux
+1. Open a terminal window.
+2. Navigate to the directory where you want to create the environment.
+3. To create a new environment, enter the following command:
+```
+python -m venv env_name
+```
+Replace `env_name` with your desired environment name.
+4. To activate the environment, enter the following command:
+```
+source env_name/bin/activate
+```
+Replace `env_name` with the name of the environment you created.
+
+### Running an Environment
+
+Once you have created and activated your environment, you can run commands within it. For example, to install packages using pip, you can use the following command to install need packages:
+```
+pip install -r requirements.txt
+```
+
+## Understand the folder structure
+
+```
+Training Code
+    convert_ckpt_to_pretrained.py
+    main.py
+    README.md
+```
+
+1. `main.py`:  Use to experiment the model, training, testing, predicting. After training, you will get a `.ckpt` file.
+2. `convert_ckpt_to_pretrained.py`: Use to convert `.ckpt` file to pretrained folder (for deploying or for next experiment).
+3. `README.md`: Documents.
+
+### Data structure
+
+There're two parameter control the path of data in `main.py`. The `--indict-tts-path` and `--cv-path`, which is path for `Indic TTS` and `Common Voice`, respectively.
+
+Assume I have a folder name `data` have 2 folder inside:
+
+```
+    data/
+        IndicTTS_English/
+            IndicTTS_Phase2_Assamese_fem_Speaker1_english/
+                english/
+                    wav/
+                        ...wav
+                    txt.done.data
+            IndicTTS_Phase2_Assamese_male_Speaker1_english/
+            ...
+            IndicTTS_Phase2_Telugu_male_Speaker1_english/
+        cv-corpus
+            en
+                ...
+    convert_ckpt_to_pretrained.py
+    main.py
+    README.md
+```
+
+- `Indic TTS` structure: If you care about put newly data to continue training the model, you should make the new dataset have same structure like `IndicTTS_English` above, each folder in `IndicTTS_English` represent for each type of data you have. Inside its, have `english` folder, then `wav` folder and `txt.done.data` file. You should make all new data have the same format, structure like original (even space in `txt.done.data`).
+- `Common Voice (cv)`: You don't need to care about this folder.
+
+## How to run
+
+### In case you want to run from scratch
+
+```
+python main.py --batch-size 64 --epochs 10 --num-workers 8 --train --test --predict --indict-tts-path /data/IndicTTS_English/ --cv-path data/cv-corpus/en --log-wandb --scheduler-for-step
+```
+
+### In case you want to continue training the model from `.ckpt` file.
+
+```
+python main.py --batch-size 64 --epochs 10 --num-workers 8 --train --test --predict --indict-tts-path /data/IndicTTS_English/ --cv-path data/cv-corpus/en --log-wandb --scheduler-for-step --ckpt-path <ckpt.name>.ckpt
+```
+
+### In case you want to continue training the model from pretrained model (after running the `convert_ckpt_to_pretrained.py` file).
+
+```
+python main.py --batch-size 64 --epochs 10 --num-workers 8 --train --test --predict --indict-tts-path /data/IndicTTS_English/ --cv-path data/cv-corpus/en --log-wandb --scheduler-for-step --pretrained-model-path <model-path>/
+```
