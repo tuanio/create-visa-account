@@ -143,17 +143,33 @@ Assume I have a folder name `data` have 2 folder inside:
 ### In case you want to run from scratch
 
 ```
-python main.py --batch-size 64 --epochs 10 --num-workers 8 --train --test --predict --indict-tts-path /data/IndicTTS_English/ --cv-path data/cv-corpus/en --log-wandb --scheduler-for-step
+python main.py --batch-size 64 --epochs 10 --num-workers 8 \ 
+    --train --test --predict \
+    --cv-path data/cv-corpus/en \
+    --indict-tts-path /data/IndicTTS_English/ \
+    --log-wandb --scheduler-for-step
 ```
+
+⚠️ The `convert_ckpt_to_pretrained.py` is very straightforward, I believe you can read and run it.
 
 ### In case you want to continue training the model from `.ckpt` file.
 
 ```
-python main.py --batch-size 64 --epochs 10 --num-workers 8 --train --test --predict --indict-tts-path /data/IndicTTS_English/ --cv-path data/cv-corpus/en --log-wandb --scheduler-for-step --ckpt-path <ckpt.name>.ckpt
+python main.py --batch-size 64 --epochs 10 --num-workers 8 \
+    --train --test --predict \
+    --indict-tts-path /data/IndicTTS_English/ \
+    --cv-path data/cv-corpus/en \
+    --log-wandb --scheduler-for-step \
+    --ckpt-path <ckpt.name>.ckpt
 ```
 
 ### In case you want to continue training the model from pretrained model (after running the `convert_ckpt_to_pretrained.py` file).
 
 ```
-python main.py --batch-size 64 --epochs 10 --num-workers 8 --train --test --predict --indict-tts-path /data/IndicTTS_English/ --cv-path data/cv-corpus/en --log-wandb --scheduler-for-step --pretrained-model-path <model-path>/
+python main.py --batch-size 64 --epochs 10 --num-workers 8 \
+    --train --test --predict \
+    --indict-tts-path /data/IndicTTS_English/ \
+    --cv-path data/cv-corpus/en \
+    --log-wandb --scheduler-for-step \
+    --pretrained-model-path <model-path>/
 ```
